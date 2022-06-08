@@ -44,14 +44,20 @@ const scoreboard = document.querySelectorAll(".value")
 
 flatpickr(datetimePicker, options)
 
+
+
 const timer = function () {
-  setInterval(() => {
+  let timerId = setInterval(() => {
     const subtraction = slcDate - new Date;
-    const timerTime = Object.values(convertMs(subtraction));
-    for (let i = 0; i < 3; i++) {
-      scoreboard[i].textContent = String(timerTime[i]).padStart(2, "0")
+    if (subtraction <= 0) {
+      clearTimeout(timerId);
+    } else {
+      const timerTime = Object.values(convertMs(subtraction));
+      for (let i = 0; i < 3; i++) {
+        scoreboard[i].textContent = String(timerTime[i]).padStart(2, "0")
+      }
+      scoreboard[3].textContent = timerTime[3]
     }
-    scoreboard[3].textContent = timerTime[3]
   }, 1000);
 }
 
